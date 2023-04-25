@@ -1,0 +1,51 @@
+using System;
+using System.IO.Pipes;
+
+namespace HelloWorld
+{
+    class HelloWorld
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello World!");
+            int age;
+            age = 30;
+            Console.WriteLine(age); //30
+            float height = 160.5f;
+            Console.WriteLine(height); //160.5
+            String name;
+            name = "정인서";
+            Console.WriteLine(name); //정인서
+            int answer;
+            answer = 1 + 2;
+            Console.WriteLine(answer); //3 
+            answer = 3 - 4;
+            Console.WriteLine(answer); // -1
+            answer = 8 / 4;
+            Console.WriteLine(answer); // 2
+
+            int n1 = 8;
+            int n2 = 9;
+            int answer2;
+            answer2 = n1 + n2;
+            Console.WriteLine(answer2); //17
+
+            int answer3 = 10;
+            answer3+=5;
+            Console.WriteLine(answer3); //15
+
+            int answer4 = 10;
+            answer4++;
+            Console.WriteLine(answer4); //11
+
+            string str1 = "happy";
+            string str2 = "birthday";
+            string message;
+
+            message = str1 + str2;
+            Console.WriteLine(message); // happybirthday
+            str1 += str2;
+            Console.WriteLine(str1); // happybirthday
+        }
+    }
+}
