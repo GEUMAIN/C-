@@ -1,0 +1,41 @@
+Random rand = new Random();
+// 가위:0 바위:1 보:2
+int computer_choice = rand.Next(0, 3); //0~3의 숫자에서 랜덤하게 가져오는것
+
+    int choice = Convert.ToInt32(Console.ReadLine());
+switch (choice) 
+{
+    case 0:
+        Console.WriteLine("가위를 선택하셨습니다.");
+        break;
+    case 1:
+        Console.WriteLine("바위를 선택하셨습니다.");
+        break;
+    case 2:
+        Console.WriteLine("보를 선택하셨습니다.");
+        break;
+}
+switch (computer_choice)
+{
+    case 0:
+        Console.WriteLine("컴퓨터의 선택은 가위입니다.");
+        break;
+    case 1:
+        Console.WriteLine("컴퓨터의 선택은 바위입니다.");
+        break;
+    case 2:
+        Console.WriteLine("컴퓨터의 선택은 보입니다.");
+        break;
+}
+// 승리 패배 무승부 만들기
+int result = choice - computer_choice;
+if (result == 0)
+{
+    Console.WriteLine("무승부입니다.");
+}else if (result == 1)
+{
+    Console.WriteLine("승리입니다.");
+}else
+{
+    Console.WriteLine("패배했습니다.");
+}
