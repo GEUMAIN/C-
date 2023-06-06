@@ -5,57 +5,105 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    public float speed; //¼Óµµ
+    public float speed; //ì†ë„
     public float power;
-    public float maxShotDelay; //¹ß»ç µô·¹ÀÌ º¯¼ö ÃÖ´ë
-    public float curShotDelay; //ÇöÀç
+    public float maxShotDelay; //ë°œì‚¬ ë”œë ˆì´ ë³€ìˆ˜ ìµœëŒ€
+    public float curShotDelay; //í˜„ì¬
 
-    public bool isTouchTop; //À§¿¡ ´ê¾Ò´Â°¡?
-    public bool isTouchBottom; //¾Æ·¡¿¡ ´ê¾Ò´Â°¡?
-    public bool isTouchLeft; //¿ŞÂÊ¿¡ ´ê¾Ò´Â°¡?
-    public bool isTouchRight; //¿À¸¥ÂÊ¿¡ ´ê¾Ò´Â°¡?
+
+    public bool isTouchTop; //ìœ„ì— ë‹¿ì•˜ëŠ”ê°€?
+    public bool isTouchBottom; //ì•„ë˜ì— ë‹¿ì•˜ëŠ”ê°€?
+    public bool isTouchLeft; //ì™¼ìª½ì— ë‹¿ì•˜ëŠ”ê°€?
+    public bool isTouchRight; //ì˜¤ë¥¸ìª½ì— ë‹¿ì•˜ëŠ”ê°€?
 
     public GameObject bulletobjA;
     public GameObject bulletobjB;
+    public GameObject soulHeart1;
+    public GameObject soulHeart2;
+    public GameObject soulHeart3;
+    public GameObject soulHeart4;
+    public GameObject soulHeart5;
+
+    public int soulheart; //ë³´í˜¸ë§‰ ê°™ì€ ê±°
+    public int maxsoulheart;
 
     Animator anim;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        soulheart = 0;
+        maxsoulheart = 6;
     }
     void Update()
     {
         Move();
         Fire();
         Reload();
-        if (Input.GetKeyDown(KeyCode.Keypad1)) //ÄÜ¼Ö Å°ÆĞµå1À» ´©¸£¸é ·¹º§1·Î º¯°æ
+        if (Input.GetKeyDown(KeyCode.Keypad1)) //ì½˜ì†” í‚¤íŒ¨ë“œ1ì„ ëˆ„ë¥´ë©´ ë ˆë²¨1ë¡œ ë³€ê²½
         {
             power = 1;
-
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) //ÄÜ¼Ö Å°ÆĞµå2À» ´©¸£¸é ·¹º§2·Î º¯°æ
+        else if (Input.GetKeyDown(KeyCode.Keypad2)) //ì½˜ì†” í‚¤íŒ¨ë“œ2ì„ ëˆ„ë¥´ë©´ ë ˆë²¨2ë¡œ ë³€ê²½
         {
             power = 2;
-
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) //ÄÜ¼Ö Å°ÆĞµå3À» ´©¸£¸é ·¹º§3À¸·Î º¯°æ
+        else if (Input.GetKeyDown(KeyCode.Keypad3)) //ì½˜ì†” í‚¤íŒ¨ë“œ3ì„ ëˆ„ë¥´ë©´ ë ˆë²¨3ìœ¼ë¡œ ë³€ê²½
         {
             power = 3;
-
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4)) //ì½˜ì†” í‚¤íŒ¨ë“œ4ì„ ëˆ„ë¥´ë©´ ì†Œìš¸í•˜íŠ¸ í•˜ë‚˜ ì¶”ê°€
+        {
+            soulheart = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5)) //ì½˜ì†” í‚¤íŒ¨ë“œ5ì„ ëˆ„ë¥´ë©´ ì†Œìš¸í•˜íŠ¸ í•˜ë‚˜ ë” ì¶”ê°€
+        {
+            soulheart = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6)) //ì½˜ì†” í‚¤íŒ¨ë“œ6ì„ ëˆ„ë¥´ë©´ ì†Œìš¸í•˜íŠ¸ í•˜ë‚˜ ë” ì¶”ê°€
+        {
+            soulheart = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad7)) //ì½˜ì†” í‚¤íŒ¨ë“œ7ì„ ëˆ„ë¥´ë©´ ì†Œìš¸í•˜íŠ¸ í•˜ë‚˜ ë” ì¶”ê°€
+        {
+            soulheart = 4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad8)) //ì½˜ì†” í‚¤íŒ¨ë“œ8ì„ ëˆ„ë¥´ë©´ ì†Œìš¸í•˜íŠ¸ í•˜ë‚˜ ë” ì¶”ê°€
+        {
+            soulheart = 5;
+        }
+        if (soulheart == 1) //ì†Œìš¸í•˜íŠ¸ê°€ 1ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í™œì„±í™”í•˜ê¸°
+        {
+            soulHeart1.SetActive(true);
+        }
+        else if (soulheart == 2) //ì†Œìš¸í•˜íŠ¸ê°€ 2ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ ë” í™œì„±í™”í•˜ê¸°
+        {
+            soulHeart2.SetActive(true); //ì†Œìš¸í•˜íŠ¸ê°€ 3ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ ë” í™œì„±í™”í•˜ê¸°
+        }
+        else if (soulheart == 3)
+        {
+            soulHeart3.SetActive(true); //ì†Œìš¸í•˜íŠ¸ê°€ 4ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ ë” í™œì„±í™”í•˜ê¸°
+        }
+        else if (soulheart == 4)
+        {
+            soulHeart4.SetActive(true); //ì†Œìš¸í•˜íŠ¸ê°€ 5ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ ë” í™œì„±í™”í•˜ê¸° 
+        }
+        else if (soulheart == 5)
+        {
+            soulHeart5.SetActive(true); //ì†Œìš¸í•˜íŠ¸ê°€ 6ì´ë¼ë©´ ì†Œìš¸í•˜íŠ¸ ì˜¤ë¸Œì íŠ¸ í•˜ë‚˜ ë” í™œì„±í™”í•˜ê¸°
         }
     }
     void Move()
     {
-        //ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÌ±â
-        float h = Input.GetAxisRaw("Horizontal"); //¼öÆò
-        if ((isTouchRight == true && h == -1) || (isTouchLeft == true && h == 1)) //¸¸¾à h°¡ 1ÀÌ°Å³ª Right°¡ true¶ó¸é or ¸¸¾à h°¡ -1ÀÌ°Å³ª Left°¡ true¶ó¸é
+        //í”Œë ˆì´ì–´ ì›€ì§ì´ê¸°
+        float h = Input.GetAxisRaw("Horizontal"); //ìˆ˜í‰
+        if ((isTouchRight == true && h == -1) || (isTouchLeft == true && h == 1)) //ë§Œì•½ hê°€ 1ì´ê±°ë‚˜ Rightê°€ trueë¼ë©´ or ë§Œì•½ hê°€ -1ì´ê±°ë‚˜ Leftê°€ trueë¼ë©´
             h = 0;
-        float v = Input.GetAxisRaw("Vertical"); //¼öÁ÷
-        if ((isTouchTop == true && v == 1) || (isTouchBottom == true && v == -1)) //¸¸¾à v°¡ 1ÀÌ°Å³ª Top°¡ true¶ó¸é or ¸¸¾à v°¡ -1ÀÌ°Å³ª Bottom°¡ true¶ó¸é
+        float v = Input.GetAxisRaw("Vertical"); //ìˆ˜ì§
+        if ((isTouchTop == true && v == 1) || (isTouchBottom == true && v == -1)) //ë§Œì•½ vê°€ 1ì´ê±°ë‚˜ Topê°€ trueë¼ë©´ or ë§Œì•½ vê°€ -1ì´ê±°ë‚˜ Bottomê°€ trueë¼ë©´
             v = 0;
         Vector3 curPos = transform.position;
-        Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime; //!!transformÀº ¹İµå½Ã Time.deltaTimeÀ» °öÇØÁÙ °Í!(¹°¸®Àû ÀÌµ¿Àº »ó°ü x)
+        Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime; //!!transformì€ ë°˜ë“œì‹œ Time.deltaTimeì„ ê³±í•´ì¤„ ê²ƒ!(ë¬¼ë¦¬ì  ì´ë™ì€ ìƒê´€ x)
         transform.position = curPos + nextPos;
 
 
@@ -67,44 +115,44 @@ public class Player : MonoBehaviour
     }
     void Fire()
     {
-        //ÃÑ¾Ë ½î±â
-        if (!Input.GetButton("Fire1")) //fire1¹öÆ°À» ´­·¶´Ù¸é?
+        //ì´ì•Œ ì˜ê¸°
+        if (!Input.GetButton("Fire1")) //fire1ë²„íŠ¼ì„ ëˆŒë €ë‹¤ë©´?
         {
             return;
         }
-        if(curShotDelay < maxShotDelay) //ÇöÀç ÀåÀü¼ö°¡ ÃÖ´ëº¸´Ù ³ÑÁö ¾Ê¾Ò´Ù¸é?
+        if(curShotDelay < maxShotDelay) //í˜„ì¬ ì¥ì „ìˆ˜ê°€ ìµœëŒ€ë³´ë‹¤ ë„˜ì§€ ì•Šì•˜ë‹¤ë©´?
         {
             return;
         }
         switch (power){
-            case 1: //·¹º§1
-                //ÆÄ¿ö°¡ ÇÏ³ª´Ù
+            case 1: //ë ˆë²¨1
+                //íŒŒì›Œê°€ í•˜ë‚˜ë‹¤
                 GameObject bullet = Instantiate(bulletobjA, transform.position, transform.rotation);
-                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); //ÈûÁÖ±â
-                rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
+                Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>(); //í˜ì£¼ê¸°
+                rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
                 break;
-            case 2: //·¹º§2
+            case 2: //ë ˆë²¨2
                 GameObject bulletR = Instantiate(bulletobjA, transform.position+Vector3.right*0.1f, transform.rotation);
                 GameObject bulletL = Instantiate(bulletobjA, transform.position+Vector3.left*0.1f, transform.rotation);
-                Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>(); //¿À¸¥ÂÊ ÈûÁÖ±â
-                Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>(); //¿ŞÂÊ ÈûÁÖ±â
-                rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
-                rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
+                Rigidbody2D rigidR = bulletR.GetComponent<Rigidbody2D>(); //ì˜¤ë¥¸ìª½ í˜ì£¼ê¸°
+                Rigidbody2D rigidL = bulletL.GetComponent<Rigidbody2D>(); //ì™¼ìª½ í˜ì£¼ê¸°
+                rigidR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
+                rigidL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
                 break;
-            case 3: //·¹º§3
+            case 3: //ë ˆë²¨3
                 GameObject bulletRR = Instantiate(bulletobjA, transform.position + Vector3.right * 0.25f, transform.rotation);
-                GameObject bulletCC = Instantiate(bulletobjB, transform.position, transform.rotation); //È¥ÀÚ ´Ù¸£°Ô Å« ÃÑ¾Ë ½î±â
+                GameObject bulletCC = Instantiate(bulletobjB, transform.position, transform.rotation); //í˜¼ì ë‹¤ë¥´ê²Œ í° ì´ì•Œ ì˜ê¸°
                 GameObject bulletLL = Instantiate(bulletobjA, transform.position + Vector3.left * 0.25f, transform.rotation);
-                Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>(); //¿À¸¥ÂÊ ÈûÁÖ±â
-                Rigidbody2D rigidCC = bulletCC.GetComponent<Rigidbody2D>(); //°¡¿îµ¥ ÈûÁÖ±â
-                Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>(); //¿ŞÂÊ ÈûÁÖ±â
-                rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
-                rigidCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
-                rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//À§ ¹æÇâÀ¸·Î ¼Óµµ*10¸¸Å­ ³ª¾Æ°¡°Ô
+                Rigidbody2D rigidRR = bulletRR.GetComponent<Rigidbody2D>(); //ì˜¤ë¥¸ìª½ í˜ì£¼ê¸°
+                Rigidbody2D rigidCC = bulletCC.GetComponent<Rigidbody2D>(); //ê°€ìš´ë° í˜ì£¼ê¸°
+                Rigidbody2D rigidLL = bulletLL.GetComponent<Rigidbody2D>(); //ì™¼ìª½ í˜ì£¼ê¸°
+                rigidRR.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
+                rigidCC.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
+                rigidLL.AddForce(Vector2.up * 10, ForceMode2D.Impulse);//ìœ„ ë°©í–¥ìœ¼ë¡œ ì†ë„*10ë§Œí¼ ë‚˜ì•„ê°€ê²Œ
                 break;
         }
 
-        curShotDelay = 0; //ÃÑ¾ËÀ» ½î°í 0À¸·Î ÃÊ±âÈ­ ÇØÁÖ±â
+        curShotDelay = 0; //ì´ì•Œì„ ì˜ê³  0ìœ¼ë¡œ ì´ˆê¸°í™” í•´ì£¼ê¸°
     }
     void Reload()
     {
@@ -112,11 +160,11 @@ public class Player : MonoBehaviour
 
     }
 
-    void OnTriggerEnter2D(Collider2D collision) //°æ°è¼±¿¡ µé¾î¿Ô´Ù¸é
+    void OnTriggerEnter2D(Collider2D collision) //ê²½ê³„ì„ ì— ë“¤ì–´ì™”ë‹¤ë©´
     {
-        if(collision.gameObject.tag == "Border") //¸¸¾à Border¶ó´Â ÅÂ±×¸¦ °¡Áø °ÔÀÓ ¿ÀºêÁ§Æ®¿¡ ´ê¾ÒÀ¸¸é
+        if(collision.gameObject.tag == "Border") //ë§Œì•½ Borderë¼ëŠ” íƒœê·¸ë¥¼ ê°€ì§„ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì— ë‹¿ì•˜ìœ¼ë©´
         {
-            //°ÔÀÓ ¿ÀºêÁ§Æ® top bottom left right¿¡ ´ê¾Ò´Ù¸é isTouchµéÀ» true·Î ¹Ù²ãÁØ´Ù
+            //ê²Œì„ ì˜¤ë¸Œì íŠ¸ top bottom left rightì— ë‹¿ì•˜ë‹¤ë©´ isTouchë“¤ì„ trueë¡œ ë°”ê¿”ì¤€ë‹¤
             switch (collision.gameObject.name)
             {
                 case "Top":
@@ -133,12 +181,27 @@ public class Player : MonoBehaviour
                     break;
             }
         }
-    }
-    void OnTriggerExit2D(Collider2D collision) //°æ°è¼±¿¡¼­ ³ª¿Ô´Ù¸é
-    {
-        if (collision.gameObject.tag == "Border") //¸¸¾à Border¶ó´Â ÅÂ±×¸¦ °¡Áø °ÔÀÓ ¿ÀºêÁ§Æ®¿¡ ´ê¾ÒÀ¸¸é
+        else if (collision.gameObject.tag == "Item")
         {
-            //°ÔÀÓ ¿ÀºêÁ§Æ® top bottom left right¿¡ ´ê¾Ò´Ù¸é isTouchµéÀ» false·Î ¹Ù²ãÁØ´Ù
+            item Item = collision.gameObject.GetComponent<item>();
+            switch (Item.type)
+            {
+                case "SoulHeart":
+                    if(soulheart < maxsoulheart)
+                    {
+                        soulheart += 1;
+                    }
+                    break;
+
+            }
+            Destroy(collision.gameObject);
+        }
+    }
+    void OnTriggerExit2D(Collider2D collision) //ê²½ê³„ì„ ì—ì„œ ë‚˜ì™”ë‹¤ë©´
+    {
+        if (collision.gameObject.tag == "Border") //ë§Œì•½ Borderë¼ëŠ” íƒœê·¸ë¥¼ ê°€ì§„ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì— ë‹¿ì•˜ìœ¼ë©´
+        {
+            //ê²Œì„ ì˜¤ë¸Œì íŠ¸ top bottom left rightì— ë‹¿ì•˜ë‹¤ë©´ isTouchë“¤ì„ falseë¡œ ë°”ê¿”ì¤€ë‹¤
             switch (collision.gameObject.name)
             {
                 case "Top":
