@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class Player : MonoBehaviour
 {
 
@@ -6,6 +10,7 @@ public class Player : MonoBehaviour
     public float maxShotDelay; //발사 딜레이 변수 최대
     public float curShotDelay; //현재
 
+
     public bool isTouchTop; //위에 닿았는가?
     public bool isTouchBottom; //아래에 닿았는가?
     public bool isTouchLeft; //왼쪽에 닿았는가?
@@ -13,12 +18,22 @@ public class Player : MonoBehaviour
 
     public GameObject bulletobjA;
     public GameObject bulletobjB;
+    public GameObject soulHeart1;
+    public GameObject soulHeart2;
+    public GameObject soulHeart3;
+    public GameObject soulHeart4;
+    public GameObject soulHeart5;
+
+    public int soulheart; //보호막 같은 거
+    public int maxsoulheart;
 
     Animator anim;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        soulheart = 0;
+        maxsoulheart = 6;
     }
     void Update()
     {
@@ -28,17 +43,54 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Keypad1)) //콘솔 키패드1을 누르면 레벨1로 변경
         {
             power = 1;
-
         }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) //콘솔 키패드2을 누르면 레벨2로 변경
+        else if (Input.GetKeyDown(KeyCode.Keypad2)) //콘솔 키패드2을 누르면 레벨2로 변경
         {
             power = 2;
-
         }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) //콘솔 키패드3을 누르면 레벨3으로 변경
+        else if (Input.GetKeyDown(KeyCode.Keypad3)) //콘솔 키패드3을 누르면 레벨3으로 변경
         {
             power = 3;
-
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4)) //콘솔 키패드4을 누르면 소울하트 하나 추가
+        {
+            soulheart = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad5)) //콘솔 키패드5을 누르면 소울하트 하나 더 추가
+        {
+            soulheart = 2;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6)) //콘솔 키패드6을 누르면 소울하트 하나 더 추가
+        {
+            soulheart = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad7)) //콘솔 키패드7을 누르면 소울하트 하나 더 추가
+        {
+            soulheart = 4;
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad8)) //콘솔 키패드8을 누르면 소울하트 하나 더 추가
+        {
+            soulheart = 5;
+        }
+        if (soulheart == 1) //소울하트가 1이라면 소울하트 오브젝트 활성화하기
+        {
+            soulHeart1.SetActive(true);
+        }
+        else if (soulheart == 2) //소울하트가 2이라면 소울하트 오브젝트 하나 더 활성화하기
+        {
+            soulHeart2.SetActive(true); //소울하트가 3이라면 소울하트 오브젝트 하나 더 활성화하기
+        }
+        else if (soulheart == 3)
+        {
+            soulHeart3.SetActive(true); //소울하트가 4이라면 소울하트 오브젝트 하나 더 활성화하기
+        }
+        else if (soulheart == 4)
+        {
+            soulHeart4.SetActive(true); //소울하트가 5이라면 소울하트 오브젝트 하나 더 활성화하기 
+        }
+        else if (soulheart == 5)
+        {
+            soulHeart5.SetActive(true); //소울하트가 6이라면 소울하트 오브젝트 하나 더 활성화하기
         }
     }
     void Move()
@@ -128,6 +180,21 @@ public class Player : MonoBehaviour
                     isTouchLeft = true;
                     break;
             }
+        }
+        else if (collision.gameObject.tag == "Item")
+        {
+            item Item = collision.gameObject.GetComponent<item>();
+            switch (Item.type)
+            {
+                case "SoulHeart":
+                    if(soulheart < maxsoulheart)
+                    {
+                        soulheart += 1;
+                    }
+                    break;
+
+            }
+            Destroy(collision.gameObject);
         }
     }
     void OnTriggerExit2D(Collider2D collision) //경계선에서 나왔다면
