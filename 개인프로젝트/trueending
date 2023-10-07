@@ -1,0 +1,116 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class trueending : MonoBehaviour
+{
+    public TypeWriterEffect script1Instance;
+    public TypeWriterEffect2 script2Instance;
+    public TypeWriterEffect3 script3Instance;
+    public TypeWriterEffect4 script4Instance;
+    public TypeWriterEffect5 script5Instance;
+    public TypeWriterEffect6 script6Instance;
+    public TypeWriterEffect7 script7Instance;
+    public TypeWriterEffect8 script8Instance;
+    public TypeWriterEffect9 script9Instance;
+    public TypeWriterEffect10 script10Instance;
+    public TypeWriterEffect11 script11Instance;
+    public TypeWriterEffect12 script12Instance;
+    public TypeWriterEffect13 script13Instance;
+    public TypeWriterEffect14 script15Instance;
+
+
+    public GameObject text1;
+    public GameObject text2;
+    public GameObject text3;
+    public GameObject text4;
+    public GameObject text5;
+    public GameObject text6;
+    public GameObject text7;
+    public GameObject text8;
+    public GameObject text9;
+    public GameObject text10;
+    public GameObject text11;
+    public GameObject text12;
+    public GameObject text13;
+
+    public GameObject shop;
+    public GameObject problems;
+    public GameObject gamescreen;
+    public problemnum script14Instance;
+
+    public bool num;
+    public bool num2;
+    public bool num3;
+    public bool num4;
+    public bool num5;
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Keypad5))
+        {
+            num = true;
+            Debug.Log(5);
+        }
+        if (Input.GetKey(KeyCode.Keypad1))
+        {
+            num2 = true;
+            Debug.Log(1);
+        }
+        if (Input.GetKey(KeyCode.Keypad2))
+        {
+            num3 = true;
+            Debug.Log(2);
+        }
+        if (Input.GetKey(KeyCode.Keypad6))
+        {
+            num4 = true;
+            Debug.Log(6);
+        }
+        if (Input.GetKey(KeyCode.Keypad3))
+        {
+            num5 = true;
+            Debug.Log(3);
+        }
+        if (num == true && num2 == true && num3 == true && num4 == true && num5 == true)
+        {
+            end();
+        }
+    }
+    public void end()
+    {
+        text1.SetActive(false);
+        text2.SetActive(false);
+        text3.SetActive(false);
+        text4.SetActive(false);
+        text5.SetActive(false);
+        text6.SetActive(false);
+        text7.SetActive(false);
+        text8.SetActive(false);
+        text9.SetActive(false);
+        text10.SetActive(false);
+        text11.SetActive(false);
+        text12.SetActive(false);
+        text13.SetActive(false);
+        script1Instance.enabled = false;
+        script2Instance.enabled = false;
+        script3Instance.enabled = false;
+        script4Instance.enabled = false;
+        script5Instance.enabled = false;
+        script6Instance.enabled = false;
+        script7Instance.enabled = false;
+        script8Instance.enabled = false;
+        script9Instance.enabled = false;
+        script10Instance.enabled = false;
+        script11Instance.enabled = false;
+        script12Instance.enabled = false;
+        script13Instance.enabled = false;
+        script14Instance.enabled = false;
+        shop.SetActive(false);
+        problems.SetActive(false);
+        gamescreen.SetActive(false);
+        
+        script15Instance.enabled = true;
+        script15Instance.StartTalk(script15Instance.Txtdialogue);
+    }
+}
