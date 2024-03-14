@@ -10,12 +10,21 @@ public class TopDownCarController : MonoBehaviour
     public float turnFactor = 3.5f; //회전
     public float maxSpeed = 20; //최고 속도
 
+    [Header("Sprites")]
+    public SpriteRenderer carSpriteRenderer;
+    public SpriteRenderer carShadowRenderer;
+
+    [Header("Jumping")]
+    public AnimationCurve jumpCurve;
+
     float acclerationInput = 0; //눌렀을 때 가속 변하는걸 저장하는 변수
     float steeringInput = 0; //눌렀을때
 
     float rotationAngle = 0; //회전 각도
 
     float velocityVsUp = 0; //정면 속도
+
+    bool isJumping = false;
 
 
     //컴포넌트 불러오기
@@ -82,33 +91,87 @@ public class TopDownCarController : MonoBehaviour
 
     float GetLateralVelocity()
     {
+        //벡터의 각도를 리턴한다
         return Vector2.Dot(transform.right, carRigidbody2D.velocity);
     }
 
     public bool IsTireScreeching(out float lateralVelocity, out bool isBraking)
     {
+        //측면속도에 벡터의 각도를 저장
         lateralVelocity = GetLateralVelocity();
+        //브레이킹 멈춤
         isBraking = false;
-
+        
+        //가속이 0보다 작고 앞으로가는 속도가 0보다 크다면
         if (acclerationInput < 0 && velocityVsUp > 0)
         {
+            //브레이킹을 활성화하고
             isBraking = true;
+            //결과를 리턴한다
             return true;
         }
-
+        //만약 벡터의 각도가 4보다 크다면
         if (Mathf.Abs(GetLateralVelocity()) > 4.0f)
+        //결과를 리턴한다
             return true;
-
+        //모두 해당하지 않으면 결과를 리턴하지 않는다
         return false;
     }
 
     public void SetInputVector(Vector2 inputVector)
     {
+        //좌우입력의 입력벡터의 x 저장
         steeringInput = inputVector.x;
+        //좌우입력의 입력벡터의 y 저장
         acclerationInput = inputVector.y;
     }
+
     public float GetVelocityMagnitude()
     {
       return carRigidbody2D.velocity.magnitude;
     } 
+
+    public void Jump(float jumpHeightScale, float jumpPushScale)
+    {
+        //만약 점프한 상태가 아니라면 JumpCo 코르틴 활성화
+        if(!isJumping)
+            StartCoroutine(JumpCo(jumpHeightScale, jumpPushScale));
+    }
+
+    private IEnumerator JumpCo(float jumpHeightScale, float jumpPushScale)
+    {
+        //점프 활성화
+        isJumping = true;
+        //점프 시작 시간에 시간을 저장
+        float jumpStartTime = Time.time;
+        //점프 지속시간
+        float jumpDuration = 2;
+        //점프가 활성화 상태라면
+        while (isJumping)
+        {
+            //점프 과정에 있는 곳의 백분율 0 - 1.0로 계산
+            float jumpCompletedPercentage = (Time.time - jumpStartTime) / jumpDuration;
+            jumpCompletedPercentage = Mathf.Clamp01(jumpCompletedPercentage);
+
+            carSpriteRenderer.transform.localScale = Vector3.one + Vector3.one * jumpCurve.Evaluate(jumpCompletedPercentage) * jumpHeightScale;
+
+            carShadowRenderer.transform.localScale = carSpriteRenderer.transform.localScale * 0.75f;
+
+            carShadowRenderer.transform.localPosition = new Vector3(1, -1, 0.0f) * 3 * jumpCurve.Evaluate(jumpCompletedPercentage) * jumpHeightScale;
+
+            if(jumpCompletedPercentage == 1.0f)
+                break;
+
+            //함수 호출까지 실행 유예
+            yield return null;
+        }
+
+        carSpriteRenderer.transform.localScale = new Vector3(0.5f, 1, 1);
+
+        
+        carShadowRenderer.transform.localPosition = Vector3.zero;
+        carShadowRenderer.transform.localScale = carSpriteRenderer.transform.localScale;
+
+        isJumping = false;
+    }
 }
